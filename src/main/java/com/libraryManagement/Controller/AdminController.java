@@ -24,7 +24,7 @@ public class AdminController {
     }
 
     @PostMapping(path = "/addBook")
-    public ResponseEntity<?> newBook (@RequestHeader("email")String email, @RequestBody Book book){
+    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
         if(!email.equals(adminEmail))
         {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
