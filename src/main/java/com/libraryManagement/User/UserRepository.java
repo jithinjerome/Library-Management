@@ -1,6 +1,6 @@
-package com.libraryManagement.Repository;
+package com.libraryManagement.User;
 
-import com.libraryManagement.Model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

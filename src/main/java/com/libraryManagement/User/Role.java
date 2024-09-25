@@ -1,4 +1,4 @@
-package com.libraryManagement.Model;
+package com.libraryManagement.User;
 
 public enum Role {
     ADMIN,

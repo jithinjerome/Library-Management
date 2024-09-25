@@ -1,8 +1,6 @@
-package com.libraryManagement.Service;
+package com.libraryManagement.User;
 
-import com.libraryManagement.Model.Role;
-import com.libraryManagement.Model.User;
-import com.libraryManagement.Repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.libraryManagement.Service;
+package com.libraryManagement.Category;
 
-import com.libraryManagement.Model.Category;
-import com.libraryManagement.Repository.CategoryRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

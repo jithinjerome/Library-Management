@@ -1,4 +1,4 @@
-package com.libraryManagement.Model;
+package com.libraryManagement.Book;
 
 import jakarta.persistence.*;
 import lombok.Data;

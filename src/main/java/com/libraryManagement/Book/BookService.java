@@ -1,9 +1,9 @@
-package com.libraryManagement.Service;
+package com.libraryManagement.Book;
 
-import com.libraryManagement.Model.Book;
-import com.libraryManagement.Model.Category;
-import com.libraryManagement.Repository.BookRepository;
-import com.libraryManagement.Repository.CategoryRepository;
+
+
+import com.libraryManagement.Category.Category;
+import com.libraryManagement.Category.CategoryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

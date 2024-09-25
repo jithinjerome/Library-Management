@@ -1,7 +1,6 @@
-package com.libraryManagement.Controller;
+package com.libraryManagement.Book;
 
-import com.libraryManagement.Model.Book;
-import com.libraryManagement.Service.BookService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

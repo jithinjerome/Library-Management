@@ -1,7 +1,7 @@
-package com.libraryManagement.Controller;
+package com.libraryManagement.Category;
 
-import com.libraryManagement.Model.Category;
-import com.libraryManagement.Service.CategoryService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

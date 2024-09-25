@@ -1,9 +1,8 @@
-package com.libraryManagement.Controller;
+package com.libraryManagement.User;
 
-import com.libraryManagement.Model.Book;
-import com.libraryManagement.Model.User;
-import com.libraryManagement.Service.BookService;
-import com.libraryManagement.Service.UserService;
+
+import com.libraryManagement.Book.Book;
+import com.libraryManagement.Book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
