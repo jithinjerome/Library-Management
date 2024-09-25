@@ -31,8 +31,8 @@ public class AdminController {
 //        return ResponseEntity.ok(bookService.newBook(book));
 //    }
 
-    public ResponseEntity<?> newBook(@RequestParam Long categoryId, @RequestBody Book book){
-        return bookService.addBook(categoryId,book);
+    public ResponseEntity<?> newBook(@RequestParam Long categoryId,@RequestParam Long languageId, @RequestBody Book book){
+        return bookService.addBook(categoryId,languageId,book);
     }
 
     @PutMapping(path = "{id}")

@@ -4,6 +4,8 @@ package com.libraryManagement.Book;
 
 import com.libraryManagement.Category.Category;
 import com.libraryManagement.Category.CategoryRepository;
+import com.libraryManagement.Language.Language;
+import com.libraryManagement.Language.LanguageRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private LanguageRepository languageRepository;
 
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
@@ -49,19 +53,23 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public ResponseEntity<?> addBook(Long categoryId, Book book) {
+    public ResponseEntity<?> addBook(Long categoryId,Long languageId, Book book) {
         Book book1 = new Book();
         Optional<Category>categoryOptional=categoryRepository.findById(categoryId);
-        if (categoryOptional.isPresent()){
+        Optional<Language> languageOptional = languageRepository.findById(languageId);
+        if (categoryOptional.isPresent() && languageOptional.isPresent()){
             Category category = categoryOptional.get();
+            Language language = languageOptional.get();
             book1.setCategoryId(categoryId);
             book1.setCategory(category.getCategoryName());
+            book1.setLanguageId(languageId);
+            //book1.setLanguage(Long.valueOf(language.getLanguage()));
             book1.setTitle(book.getTitle());
             book1.setAuthor(book.getAuthor());
             bookRepository.save(book1);
             return new ResponseEntity<>(book1,HttpStatus.OK);
         }else {
-            return new ResponseEntity<>("Category isn't present", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Category or Language isn't present", HttpStatus.BAD_REQUEST);
         }
         //return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
     }
