@@ -10,8 +10,9 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name ="id")
     private Long id;
+    @Column(name = "categoryName")
     private String categoryName;
 
 }

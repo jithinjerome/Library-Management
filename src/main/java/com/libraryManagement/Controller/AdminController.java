@@ -24,12 +24,16 @@ public class AdminController {
     }
 
     @PostMapping(path = "/addBook")
-    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
-        if(!email.equals(adminEmail))
-        {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
-        }
-        return ResponseEntity.ok(bookService.newBook(book));
+//    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
+//        if(!email.equals(adminEmail))
+//        {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
+//        }
+//        return ResponseEntity.ok(bookService.newBook(book));
+//    }
+
+    public ResponseEntity<?> newBook(@RequestParam Long categoryId, @RequestBody Book book){
+        return bookService.addBook(categoryId,book);
     }
 
     @PutMapping(path = "{id}")
