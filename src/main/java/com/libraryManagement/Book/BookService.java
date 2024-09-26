@@ -63,7 +63,7 @@ public class BookService {
             book1.setCategoryId(categoryId);
             book1.setCategory(category.getCategoryName());
             book1.setLanguageId(languageId);
-            //book1.setLanguage(Long.valueOf(language.getLanguage()));
+            book1.setLanguage(language.getLanguage());
             book1.setTitle(book.getTitle());
             book1.setAuthor(book.getAuthor());
             bookRepository.save(book1);

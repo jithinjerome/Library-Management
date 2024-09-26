@@ -23,6 +23,6 @@ public class Book {
     @Column(name = "languageId")
     private Long languageId;
     @Column(name = "language")
-    private Long language;
+    private String language;
 
 }
