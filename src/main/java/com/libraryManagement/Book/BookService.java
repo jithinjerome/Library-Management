@@ -37,6 +37,10 @@ public class BookService {
         return bookRepository.findByLanguageId(languageId);
     }
 
+    public List<Book> getBookByCategoryAndLanguage(Long categoryId, Long languageId) {
+        return bookRepository.findByCategoryIdAndLanguageId(categoryId,languageId);
+    }
+
     public Book newBook(Book book)
     {
         return bookRepository.save(book);

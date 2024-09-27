@@ -22,14 +22,19 @@ public class AdminController {
         return bookService.getAllBooks();
     }
 
-    @GetMapping(path = "books/category/{id}")
+    @GetMapping(path = "/books/category/{id}")
     public List<Book> bookByCategory(@PathVariable("id") Long categoryId){
         return bookService.getBookByCategory(categoryId);
     }
 
-    @GetMapping(path = "books/language/{id}")
+    @GetMapping(path = "/books/language/{id}")
     public List<Book> bookByLanguage(@PathVariable("id") Long languageId){
         return bookService.getBookByLanguage(languageId);
+    }
+
+    @GetMapping(path = "/books/{catId}/{lanId}")
+    public List<Book> bookByCategoryAndLanguage(@PathVariable("catId") Long categoryId, @PathVariable("lanId") Long languageId){
+        return bookService.getBookByCategoryAndLanguage(categoryId,languageId);
     }
 
 
