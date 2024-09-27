@@ -22,6 +22,12 @@ public class AdminController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping(path = "books/category/{id}")
+    public List<Book> bookByCategory(@PathVariable("id") Long categoryId){
+        return bookService.getBookByCategory(categoryId);
+    }
+
+
     @PostMapping(path = "/addBook")
 //    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
 //        if(!email.equals(adminEmail))

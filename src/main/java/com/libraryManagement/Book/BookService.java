@@ -29,6 +29,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getBookByCategory(Long categoryId) {
+        return bookRepository.findByCategoryId(categoryId);
+    }
+
     public Book newBook(Book book)
     {
         return bookRepository.save(book);
