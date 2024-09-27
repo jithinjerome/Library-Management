@@ -11,4 +11,6 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     Optional<Book> findByIdAndCategoryId(Long id, Long categoryId);
     Optional<Book> findByIdAndLanguageId(Long id, Long languageId);
     List<Book> findByCategoryId(Long categoryId);
+
+    List<Book> findByLanguageId(Long languageId);
 }

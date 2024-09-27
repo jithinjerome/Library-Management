@@ -27,6 +27,11 @@ public class AdminController {
         return bookService.getBookByCategory(categoryId);
     }
 
+    @GetMapping(path = "books/language/{id}")
+    public List<Book> bookByLanguage(@PathVariable("id") Long languageId){
+        return bookService.getBookByLanguage(languageId);
+    }
+
 
     @PostMapping(path = "/addBook")
 //    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
