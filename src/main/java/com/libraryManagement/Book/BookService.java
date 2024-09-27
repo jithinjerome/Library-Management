@@ -49,32 +49,56 @@ public class BookService {
     }
 
     @Transactional
-    public Book categoryUpdate(Long id, Long categoryId) {
-        Optional<Book> existingBook = bookRepository.findById(id);
-        Optional<Category>categoryOptional=categoryRepository.findById(categoryId);
-        if(existingBook.isPresent() && categoryOptional.isPresent())
+    public ResponseEntity<?> categoryUpdate(Long id, Long categoryId, Long newCategoryId) {
+        Optional<Book>existingBook = bookRepository.findByIdAndCategoryId(id,categoryId);
+
+        if(existingBook.isPresent())
         {
             Book updatedBook = existingBook.get();
-            Category category = categoryOptional.get();
-            updatedBook.setCategoryId(categoryId);
-            updatedBook.setCategory(category.getCategoryName());
-            return bookRepository.save(updatedBook);
+            Optional<Category>categoryOptional= categoryRepository.findById(newCategoryId);
+            if (categoryOptional.isPresent()){
+                Category category = categoryOptional.get();
+                updatedBook.setCategoryId(category.getId());
+                updatedBook.setCategory(category.getCategoryName());
+                bookRepository.save(updatedBook);
+                return new ResponseEntity<>(updatedBook,HttpStatus.OK);
+            }
         }
-        throw new RuntimeException("Book not found with id" + id+"or Category not found with id"+categoryId);
+        return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public Book languageUpdate(Long id, Long languageId) {
-        Optional<Book> existingBook = bookRepository.findById(id);
-        Optional<Language> languageOptional = languageRepository.findById(languageId);
-        if(existingBook.isPresent() && languageOptional.isPresent())
+//    public ResponseEntity<?> bookCategoryUpdATE(Long id, Long categoryId, Long newCategoryId) {
+//        Optional<Book>bookOptional=bookRepository.findByIdAndCategoryId(id,categoryId);
+//        if (bookOptional.isPresent()){
+//            Book book =bookOptional.get();
+//            Optional<Category>categoryOptional= categoryRepository.findById(newCategoryId);
+//            if (categoryOptional.isPresent()){
+//                Category category = categoryOptional.get();
+//                book.setCategoryId(category.getId());
+//                book.setCategory(category.getCategoryName());
+//                bookRepository.save(book);
+//                return new ResponseEntity<>(book,HttpStatus.OK);
+//            }
+//        }
+//        return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
+    public ResponseEntity<?> languageUpdate(Long id, Long languageId, Long newLanguageId) {
+        Optional<Book> existingBook = bookRepository.findByIdAndLanguageId(id,languageId);
+
+        if(existingBook.isPresent())
         {
             Book updatedBook = existingBook.get();
-            Language language = languageOptional.get();
-            updatedBook.setLanguageId(languageId);
-            updatedBook.setLanguage(language.getLanguage());
-            return bookRepository.save(updatedBook);
+            Optional<Language> languageOptional = languageRepository.findById(newLanguageId);
+            if(languageOptional.isPresent()){
+                Language language = languageOptional.get();
+                updatedBook.setLanguageId(language.getId());
+                updatedBook.setLanguage(language.getLanguage());
+                bookRepository.save(updatedBook);
+                return new ResponseEntity<>(updatedBook,HttpStatus.OK);
+            }
         }
-        throw new RuntimeException("Book not found with id" + id+"or Language not found with id"+languageId);
+        return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 //    @Transactional
 //    public Book updateBook(Long id, Book book) //Dynamic Update

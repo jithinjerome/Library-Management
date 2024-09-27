@@ -36,7 +36,7 @@ public class AdminController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<?> updateBook(@RequestHeader("eail")String email, @PathVariable Long id, @RequestBody Book book)
+    public ResponseEntity<?> updateBook(@RequestHeader("email")String email, @PathVariable Long id, @RequestBody Book book)
     {
         if(!email.equals(adminEmail)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
@@ -45,17 +45,21 @@ public class AdminController {
         return ResponseEntity.ok(updatedBook);
     }
 
-    @PutMapping(path = "{id}/category")
-    public ResponseEntity<?> categoryUpdate(@PathVariable Long id,@RequestParam Long categoryId){
-        Book updateBook = bookService.categoryUpdate(id,categoryId);
-        return ResponseEntity.ok(updateBook);
+    @PutMapping(path = "category/{id}")
+    public ResponseEntity<?> categoryUpdate(@PathVariable Long id,@RequestParam Long categoryId,@RequestParam Long newCategoryId){
+//        Book updateBook = bookService.categoryUpdate(id,categoryId);
+//        return ResponseEntity.ok(updateBook);
+        return bookService.categoryUpdate(id,categoryId,newCategoryId);
     }
 
-    @PutMapping(path = "{id}/language")
-    public ResponseEntity<?> languageUpdate(@PathVariable Long id, @RequestParam Long languageId)
+
+
+    @PutMapping(path = "language/{id}")
+    public ResponseEntity<?> languageUpdate(@PathVariable Long id, @RequestParam Long languageId, @RequestParam Long newLanguageId)
     {
-        Book updateBook = bookService.languageUpdate(id,languageId);
-        return  ResponseEntity.ok(updateBook);
+//        Book updateBook = bookService.languageUpdate(id,languageId);
+//        return  ResponseEntity.ok(updateBook);
+        return bookService.languageUpdate(id,languageId,newLanguageId);
     }
 
     @DeleteMapping(path = "{id}")
