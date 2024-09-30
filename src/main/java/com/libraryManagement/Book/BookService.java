@@ -41,10 +41,10 @@ public class BookService {
         return bookRepository.findByCategoryIdAndLanguageId(categoryId,languageId);
     }
 
-    public Book newBook(Book book)
-    {
-        return bookRepository.save(book);
-    }
+//    public Book newBook(Book book)
+//    {
+//        return bookRepository.save(book);
+//    }
 
     @Transactional
     public Book updateBook(Long id, Book book)
@@ -55,6 +55,7 @@ public class BookService {
             Book updatedBook = existingBook.get();
             updatedBook.setTitle(book.getTitle());
             updatedBook.setAuthor(book.getAuthor());
+            updatedBook.setQuantity(book.getQuantity());
             return bookRepository.save(updatedBook);
         }
         throw new RuntimeException("Book not found with id" + id);
@@ -142,11 +143,6 @@ public class BookService {
 //        throw new RuntimeException("Book not found with id" + id);
 //    }
 
-    public void deleteBookById(Long id) 
-    {
-        bookRepository.deleteById(id);
-    }
-
     public ResponseEntity<?> addBook(Long categoryId,Long languageId, Book book) {
         Book book1 = new Book();
         Optional<Category>categoryOptional=categoryRepository.findById(categoryId);
@@ -160,6 +156,7 @@ public class BookService {
             book1.setLanguage(language.getLanguage());
             book1.setTitle(book.getTitle());
             book1.setAuthor(book.getAuthor());
+            book1.setQuantity(book.getQuantity());
             bookRepository.save(book1);
             return new ResponseEntity<>(book1,HttpStatus.OK);
         }else {
@@ -167,6 +164,13 @@ public class BookService {
         }
         //return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    public void deleteBookById(Long id) 
+    {
+        bookRepository.deleteById(id);
+    }
+
+
 
 
 

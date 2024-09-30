@@ -16,6 +16,8 @@ public class Book {
     private String title;
     @Column(name = "author")
     private String author;
+    @Column(name = "quantity")
+    private Integer quantity;
     @Column(name = "categoryId")
     private Long categoryId;
     @Column(name = "category")
