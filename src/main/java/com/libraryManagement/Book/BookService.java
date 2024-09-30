@@ -2,16 +2,21 @@ package com.libraryManagement.Book;
 
 
 
+import com.libraryManagement.BookIssue.IssuedBookRepository;
+import com.libraryManagement.BookIssue.IssuedBooks;
 import com.libraryManagement.Category.Category;
 import com.libraryManagement.Category.CategoryRepository;
 import com.libraryManagement.Language.Language;
 import com.libraryManagement.Language.LanguageRepository;
+import com.libraryManagement.User.User;
+import com.libraryManagement.User.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +25,10 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private IssuedBookRepository issuedBookRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -171,7 +180,36 @@ public class BookService {
     }
 
 
+    public String issueBook(Long bookId, Long userId) {
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        Optional<User> userOptional = userRepository.findById(userId);
 
+        if(bookOptional.isEmpty())
+        {
+            return "Book not found";
+        }
+        if(userOptional.isEmpty())
+        {
+            return "User not found";
+        }
 
+        Book book = bookOptional.get();
+        User user = userOptional.get();
 
+        if(book.getQuantity()<=0)
+        {
+            return "Book is out of stock";
+        }
+
+        book.setQuantity(book.getQuantity()-1);
+        bookRepository.save(book);
+
+        IssuedBooks issuedBooks = new IssuedBooks();
+        issuedBooks.setBook(book);
+        issuedBooks.setUser(user);
+        issuedBooks.setIssueDate(LocalDate.now());
+        issuedBookRepository.save(issuedBooks);
+
+        return "Book issued successfully to"+user.getName()+".";
+    }
 }
