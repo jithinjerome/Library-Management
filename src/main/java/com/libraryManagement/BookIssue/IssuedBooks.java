@@ -18,13 +18,12 @@ public class IssuedBooks {
 
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "book_Id")
+    private Long book_Id;
+
+    @Column(name = "userId")
+    private Long userId;
 
     @Column(name = "issue_Date")
     private LocalDate issueDate;

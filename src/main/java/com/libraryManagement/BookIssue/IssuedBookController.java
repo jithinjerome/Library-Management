@@ -28,9 +28,4 @@ public class IssuedBookController {
         }
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-
-    @GetMapping(path = "/issuedUsers")
-    public List<IssuedBooks> issuedUsers(){
-        return issuedBookService.issuedUsers();
-    }
 }

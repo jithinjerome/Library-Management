@@ -4,6 +4,8 @@ package com.libraryManagement.Book;
 
 import com.libraryManagement.BookIssue.IssuedBookRepository;
 import com.libraryManagement.BookIssue.IssuedBooks;
+import com.libraryManagement.BookReturn.ReturnBookRepository;
+import com.libraryManagement.BookReturn.ReturnBooks;
 import com.libraryManagement.Category.Category;
 import com.libraryManagement.Category.CategoryRepository;
 import com.libraryManagement.Language.Language;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +30,8 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private IssuedBookRepository issuedBookRepository;
+    @Autowired
+    private ReturnBookRepository returnBookRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -205,11 +210,40 @@ public class BookService {
         bookRepository.save(book);
 
         IssuedBooks issuedBooks = new IssuedBooks();
-        issuedBooks.setBook(book);
-        issuedBooks.setUser(user);
+        issuedBooks.setBook_Id(book.getId());
+        issuedBooks.setUserId(user.getId());
         issuedBooks.setIssueDate(LocalDate.now());
         issuedBookRepository.save(issuedBooks);
 
         return "Book issued successfully to"+user.getName()+".";
     }
+
+    public String returnBook(Long userId, Long bookId) {
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if(bookOptional.isEmpty())
+        {
+            return  "Book not found with ID: "+bookId;
+        }
+        if(userOptional.isEmpty())
+        {
+            return "User not found";
+        }
+        Book book = bookOptional.get();
+        User user = userOptional.get();
+
+        book.setQuantity(book.getQuantity()+1);
+        bookRepository.save(book);
+
+        ReturnBooks returnBooks = new ReturnBooks();
+        returnBooks.setBookId(book.getId());
+        returnBooks.setUserId(user.getId());
+        returnBooks.setReturnDate(LocalDate.now());
+        returnBookRepository.save(returnBooks);
+
+        return "Book returned successfully ";
+
+    }
+
 }
