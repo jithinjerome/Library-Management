@@ -27,6 +27,21 @@ public class AdminController {
         return bookService.getBookByCategory(categoryId);
     }
 
+    @GetMapping(path = "/books/{author}")
+    public ResponseEntity<List<Book>> bookByAuthor(@PathVariable String author){
+        return bookService.getBookByAuthor(author);
+        //return new ResponseEntity<>(bookService.getBookByAuthor(author),HttpStatus.OK);
+
+//        List<Book> authorBooks = bookService.getBookByAuthor(author);
+//        if(authorBooks.isEmpty())
+//        {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        else {
+//            return new ResponseEntity<>(authorBooks,HttpStatus.OK);
+//        }
+    }
+
     @GetMapping(path = "/books/language/{id}")
     public List<Book> bookByLanguage(@PathVariable("id") Long languageId){
         return bookService.getBookByLanguage(languageId);

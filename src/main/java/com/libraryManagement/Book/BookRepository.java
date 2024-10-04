@@ -1,6 +1,7 @@
 package com.libraryManagement.Book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
 
     List<Book> findByCategoryIdAndLanguageId(Long categoryId, Long languageId);
+
+//    List<Book>findByAuthor(String author);
+
+    List<Book> findByAuthorContainingIgnoreCase(String author);
 }

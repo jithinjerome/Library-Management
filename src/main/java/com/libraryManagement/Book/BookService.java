@@ -55,6 +55,10 @@ public class BookService {
         return bookRepository.findByCategoryIdAndLanguageId(categoryId,languageId);
     }
 
+//    public List<Book> getBookByAuthor(String author) {
+//        return bookRepository.findByAuthor(author);
+//    }
+
 //    public Book newBook(Book book)
 //    {
 //        return bookRepository.save(book);
@@ -246,4 +250,8 @@ public class BookService {
 
     }
 
+
+    public ResponseEntity<List<Book>> getBookByAuthor(String author) {
+        return new ResponseEntity<>(bookRepository.findByAuthorContainingIgnoreCase(author),HttpStatus.OK);
+    }
 }
