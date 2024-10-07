@@ -24,5 +24,6 @@ public class ReturnBooks {
     @Column(name = "userId")
     private Long userId;
 
+    @Column(name = "returnDate")
     private LocalDate returnDate;
 }
