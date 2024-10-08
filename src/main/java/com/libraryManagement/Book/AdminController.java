@@ -78,7 +78,7 @@ public class AdminController {
         return bookService.addBook(categoryId,languageId,book);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<?> updateBook(@RequestHeader("email")String email, @PathVariable Long id, @RequestBody Book book)
     {
         if(!email.equals(adminEmail)){
@@ -88,7 +88,7 @@ public class AdminController {
         return ResponseEntity.ok(updatedBook);
     }
 
-    @PutMapping(path = "category/{id}")
+    @PutMapping(path = "/category/{id}")
     public ResponseEntity<?> categoryUpdate(@PathVariable Long id,@RequestParam Long categoryId,@RequestParam Long newCategoryId){
 //        Book updateBook = bookService.categoryUpdate(id,categoryId);
 //        return ResponseEntity.ok(updateBook);
@@ -97,7 +97,7 @@ public class AdminController {
 
 
 
-    @PutMapping(path = "language/{id}")
+    @PutMapping(path = "/language/{id}")
     public ResponseEntity<?> languageUpdate(@PathVariable Long id, @RequestParam Long languageId, @RequestParam Long newLanguageId)
     {
 //        Book updateBook = bookService.languageUpdate(id,languageId);
@@ -105,7 +105,7 @@ public class AdminController {
         return bookService.languageUpdate(id,languageId,newLanguageId);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteById(@RequestHeader("email") String email, @PathVariable Long id)
     {
         if(!email.equals(adminEmail)){

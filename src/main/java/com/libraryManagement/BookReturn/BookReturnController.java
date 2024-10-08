@@ -18,7 +18,7 @@ public class BookReturnController {
     @Autowired
     private BookService bookService;
 
-    @PostMapping(path = "return/{bookId}/{userId}")
+    @PostMapping(path = "/return/{bookId}/{userId}")
     public ResponseEntity<String> returnBook(@PathVariable Long bookId,@PathVariable Long userId)
     {
         String response = bookService.returnBook(userId,bookId);
