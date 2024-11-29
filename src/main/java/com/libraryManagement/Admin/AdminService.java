@@ -1,6 +1,7 @@
 package com.libraryManagement.Admin;
 
 import com.libraryManagement.JWT.JwtUtil;
+import com.libraryManagement.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,16 +42,17 @@ public class AdminService {
         return ResponseEntity.badRequest().body("Invalid credentials: Admin not found");
     }
 
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Admin> adminOptional = adminRepository.findByEmail(email);
-        if (adminOptional.isPresent()) {
-            Admin admin = adminOptional.get();
-            return org.springframework.security.core.userdetails.User
-                    .withUsername(admin.getEmail())
-                    .password(admin.getPassword())
-                    .authorities("ROLE_" + admin.getRole().name())
-                    .build();
-        }
-        throw new UsernameNotFoundException("User not found");
-    }
+
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Optional<Admin> userOptional = adminRepository.findByEmail(email);
+//        if (userOptional.isPresent()) {
+//            Admin user = userOptional.get();
+//            return org.springframework.security.core.userdetails.User
+//                    .withUsername(user.getEmail())
+//                    .password(user.getPassword())
+//                    .authorities(new String[]{"ROLE_" + user.getRole().name()})
+//                    .build();
+//        }
+//        throw new UsernameNotFoundException("User not found");
+//    }
 }

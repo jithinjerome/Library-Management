@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -76,28 +78,23 @@ public class LibrarianService {
         Optional<User> userOptional = userRepository.findById(userId);
         List<IssueReturnDTO> issueReturnDTOS = new ArrayList<>();
 
-        if(userOptional.isPresent())
-        {
+        if (userOptional.isPresent()) {
             List<IssuedBooks> IssuedBookList = issuedBookRepository.findByUserId(userId);
-            if(!IssuedBookList.isEmpty())
-            {
-                for (IssuedBooks issuedBooks:IssuedBookList)
-                {
+            if (!IssuedBookList.isEmpty()) {
+                for (IssuedBooks issuedBooks : IssuedBookList) {
                     User user = userOptional.get();
                     IssueReturnDTO issueReturnDTO = new IssueReturnDTO();
                     issueReturnDTO.setName(user.getName());
                     issueReturnDTO.setIssueDate(issuedBooks.getIssueDate());
                     Optional<Book> bookOptional = bookRepository.findById(issuedBooks.getBook_Id());
-                    if(bookOptional.isPresent())
-                    {
+                    if (bookOptional.isPresent()) {
                         Book book = bookOptional.get();
                         issueReturnDTO.setTitle(book.getTitle());
-                        Optional<ReturnBooks> returnBooksOptional = returnBookRepository.findByUserIdAndBookId(userId,book.getId());
-                        if(returnBooksOptional.isPresent())
-                        {
+                        Optional<ReturnBooks> returnBooksOptional = returnBookRepository.findByUserIdAndBookId(userId, book.getId());
+                        if (returnBooksOptional.isPresent()) {
                             ReturnBooks returnBooks = returnBooksOptional.get();
                             issueReturnDTO.setReturnDate(returnBooks.getReturnDate());
-                        }else {
+                        } else {
                             issueReturnDTO.setReturnDate(null);
                         }
                     }
@@ -106,27 +103,23 @@ public class LibrarianService {
                 }
                 return new ResponseEntity<>(issueReturnDTOS, HttpStatus.OK);
             }
-            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NO_CONTENT);
 
-        }
-        else
-        {
-            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
         }
     }
 
     public ResponseEntity<List<BookReturnDTO>> returnedBooks(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         List<BookReturnDTO> bookreturns = new ArrayList<>();
-        if(userOptional.isPresent())
-        {
+        if (userOptional.isPresent()) {
             List<ReturnBooks> returnBooksList = returnBookRepository.findByUserId(userId);
-            if(!returnBooksList.isEmpty()){
-                for(ReturnBooks returnBooks: returnBooksList)
-                {
+            if (!returnBooksList.isEmpty()) {
+                for (ReturnBooks returnBooks : returnBooksList) {
                     BookReturnDTO bookReturnDTO = new BookReturnDTO();
                     Optional<Book> bookOptional = bookRepository.findById(returnBooks.getBookId());
-                    if(bookOptional.isPresent()){
+                    if (bookOptional.isPresent()) {
                         User user = userOptional.get();
                         Book book = bookOptional.get();
                         bookReturnDTO.setName(user.getName());
@@ -135,13 +128,14 @@ public class LibrarianService {
                     }
                     bookreturns.add(bookReturnDTO);
                 }
-                return new ResponseEntity<>(bookreturns,HttpStatus.OK);
+                return new ResponseEntity<>(bookreturns, HttpStatus.OK);
             }
-            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NO_CONTENT);
 
-        }else {
-            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
+
 }

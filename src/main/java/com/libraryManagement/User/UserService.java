@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -58,17 +58,17 @@ public class UserService implements UserDetailsService {
     }
 
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return org.springframework.security.core.userdetails.User
-                    .withUsername(user.getEmail())
-                    .password(user.getPassword())
-                    .authorities(new String[]{"ROLE_" + user.getRole().name()})
-                    .build();
-        }
-        throw new UsernameNotFoundException("User not found");
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Optional<User> userOptional = userRepository.findByEmail(email);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            return org.springframework.security.core.userdetails.User
+//                    .withUsername(user.getEmail())
+//                    .password(user.getPassword())
+//                    .authorities(new String[]{"ROLE_" + user.getRole().name()})
+//                    .build();
+//        }
+//        throw new UsernameNotFoundException("User not found");
+//    }
 }

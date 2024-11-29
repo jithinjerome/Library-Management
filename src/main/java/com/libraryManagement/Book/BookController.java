@@ -74,11 +74,7 @@ public class BookController {
 
     //Updating a book.
     @PutMapping(path = "/update/{id}")
-    public ResponseEntity<?> updateBook(@RequestHeader("email")String email, @PathVariable Long id, @RequestBody Book book)
-    {
-        if(!email.equals(adminEmail)){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
-        }
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody Book book) {
         Book updatedBook = bookService.updateBook(id, book);
         return ResponseEntity.ok(updatedBook);
     }
@@ -104,12 +100,7 @@ public class BookController {
 
     //Delete a book by its id.
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<?> deleteById(@RequestHeader("email") String email, @PathVariable Long id)
-    {
-        if(!email.equals(adminEmail)){
-            return  ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
-        }
-
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         bookService.deleteBookById(id);
         return ResponseEntity.ok("Book Deleted Successfully");
     }
