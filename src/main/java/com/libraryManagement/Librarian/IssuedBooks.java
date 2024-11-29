@@ -1,8 +1,6 @@
-package com.libraryManagement.BookIssue;
+package com.libraryManagement.Librarian;
 
 
-import com.libraryManagement.Book.Book;
-import com.libraryManagement.User.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

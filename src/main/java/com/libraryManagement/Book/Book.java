@@ -2,6 +2,7 @@ package com.libraryManagement.Book;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Data
@@ -12,6 +13,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+    @NotNull
     @Column(name = "title")
     private String title;
     @Column(name = "author")

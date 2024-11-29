@@ -1,16 +1,20 @@
 package com.libraryManagement.User;
 
-
+import com.libraryManagement.JWT.JwtUtil;
+import com.libraryManagement.Librarian.Librarian;
+import com.libraryManagement.Librarian.LibrarianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -18,30 +22,53 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final String adminEmail = "admin@example.com";
-    private final String adminPassword = "$2a$10$7Q1bZ/lZtR7uNSxQAhEw.eVtBxZZ9Jf/jfNWTq0WkO57nMx50Yuq."; //BCrypted "admin123"
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    public User registerUser(User user){
+    public Object registerUser(User user) {
+        if (user.getRole() != null && user.getRole() == Role.ADMIN) {
+            throw new IllegalArgumentException("Registration as ADMIN is not allowed.");
+        }
+
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
+
         return userRepository.save(user);
     }
 
-    public ResponseEntity<?> loginUser(String email , String password){
 
-        if(email.equals(adminEmail) && passwordEncoder.matches(password,adminPassword)){
-            return new ResponseEntity<>("Login Successfull as Admin",HttpStatus.OK);
-        }
 
+
+    public ResponseEntity<?> loginUser(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
-        if(userOptional.isPresent())
-        {
+
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if(passwordEncoder.matches(password,user.getPassword())){
-                return new ResponseEntity<>("Login Successfull",HttpStatus.OK);
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+                return ResponseEntity.ok().body(token);
+            } else {
+                return ResponseEntity.badRequest().body("Invalid credentials: Password mismatch");
             }
         }
-        return new ResponseEntity<>("Login Failed",HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body("Invalid credentials: User not found");
+    }
 
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return org.springframework.security.core.userdetails.User
+                    .withUsername(user.getEmail())
+                    .password(user.getPassword())
+                    .authorities(new String[]{"ROLE_" + user.getRole().name()})
+                    .build();
+        }
+        throw new UsernameNotFoundException("User not found");
     }
 }

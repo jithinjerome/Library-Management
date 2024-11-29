@@ -2,10 +2,10 @@ package com.libraryManagement.Book;
 
 
 
-import com.libraryManagement.BookIssue.IssuedBookRepository;
-import com.libraryManagement.BookIssue.IssuedBooks;
-import com.libraryManagement.BookReturn.ReturnBookRepository;
-import com.libraryManagement.BookReturn.ReturnBooks;
+import com.libraryManagement.Librarian.IssuedBookRepository;
+import com.libraryManagement.Librarian.IssuedBooks;
+import com.libraryManagement.Librarian.ReturnBookRepository;
+import com.libraryManagement.Librarian.ReturnBooks;
 import com.libraryManagement.Category.Category;
 import com.libraryManagement.Category.CategoryRepository;
 import com.libraryManagement.Language.Language;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +57,7 @@ public class BookService {
 //    public List<Book> getBookByAuthor(String author) {
 //        return bookRepository.findByAuthor(author);
 //    }
-
+//
 //    public Book newBook(Book book)
 //    {
 //        return bookRepository.save(book);
@@ -188,7 +187,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-
+    @Transactional
     public String issueBook(Long bookId, Long userId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         Optional<User> userOptional = userRepository.findById(userId);
@@ -222,6 +221,7 @@ public class BookService {
         return "Book issued successfully to"+user.getName()+".";
     }
 
+    @Transactional
     public String returnBook(Long userId, Long bookId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         Optional<User> userOptional = userRepository.findById(userId);

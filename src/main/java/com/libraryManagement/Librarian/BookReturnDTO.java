@@ -1,4 +1,4 @@
-package com.libraryManagement.BookReturn;
+package com.libraryManagement.Librarian;
 
 import lombok.Data;
 

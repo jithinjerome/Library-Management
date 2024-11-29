@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/categoryDetails")
+@RequestMapping(path = "/api/categoryDetails")
 public class CategoryController {
     @Autowired
     public CategoryService categoryService;
 
     @PostMapping(path = "/addCategories")
-    public Category addCategory(@RequestBody Category category){
+    public Category addCategory(@RequestBody  Category category){
         return categoryService.save(category);
     }
 

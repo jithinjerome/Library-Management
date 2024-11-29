@@ -1,9 +1,6 @@
 package com.libraryManagement.Book;
 
 
-import com.libraryManagement.BookReturn.BookReturnDTO;
-import com.libraryManagement.BookReturn.ReturnBookRepository;
-import com.libraryManagement.BookReturn.ReturnBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/admin")
-public class AdminController {
+@RequestMapping(path = "/api/book")
+public class BookController {
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private ReturnBookService returnBookService;
 
     private final String adminEmail = "admin@example.com";
 
@@ -47,12 +41,6 @@ public class AdminController {
 //            return new ResponseEntity<>(authorBooks,HttpStatus.OK);
 //        }
     }
-
-    @GetMapping(path = "/returnBooks/{userId}")
-    public ResponseEntity<List<BookReturnDTO>> returnDetail(@PathVariable Long userId){
-        return returnBookService.returnedBooks(userId);
-    }
-
 
     @GetMapping(path = "/books/language/{id}")
     public List<Book> bookByLanguage(@PathVariable("id") Long languageId){
