@@ -20,6 +20,7 @@ public class LibrarianController {
     @Autowired
     private BookService bookService;
 
+    //Librarian register.
     @PostMapping(path = "/register")
     public ResponseEntity<?> registerUser(@RequestBody Librarian librarian) {
         try {
@@ -29,11 +30,13 @@ public class LibrarianController {
         }
     }
 
+    //Librarian login.
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String password) {
         return librarianService.loginUser(email, password);
     }
 
+    //Issue books on availability.
     @PostMapping(path = "/issue/{bookId}/{userId}")
     public ResponseEntity<String> issueBook(@PathVariable Long bookId,@PathVariable Long userId)
     {
@@ -45,6 +48,7 @@ public class LibrarianController {
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    //List of all issued books.
     @GetMapping(path = "/{userId}/issuedBooksWithReturn")
     public ResponseEntity<List<IssueReturnDTO>> getIssuedBooks(@PathVariable Long userId){
         try {
@@ -55,6 +59,7 @@ public class LibrarianController {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //Return books.
     @PostMapping(path = "/return/{bookId}/{userId}")
     public ResponseEntity<String> returnBook(@PathVariable Long bookId,@PathVariable Long userId)
     {
@@ -65,6 +70,7 @@ public class LibrarianController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    //List of all returned books.
     @GetMapping(path = "/returnBooks/{userId}")
     public ResponseEntity<List<BookReturnDTO>> returnDetail(@PathVariable Long userId){
         return librarianService.returnedBooks(userId);

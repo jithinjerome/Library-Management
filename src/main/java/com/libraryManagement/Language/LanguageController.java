@@ -12,11 +12,13 @@ public class LanguageController {
     @Autowired
     private LanguageService languageService;
 
+    //To add a new language.
     @PostMapping(path = "/addLanguage")
     public Language addLanguage(@RequestBody Language language){
         return languageService.save(language);
     }
 
+    //List of all languages.
     @GetMapping(path = "/getLanguage")
     public List<Language> getLanguage(){
         return languageService.getLanguage();

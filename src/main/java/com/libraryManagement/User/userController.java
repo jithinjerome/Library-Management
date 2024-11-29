@@ -22,16 +22,17 @@ public class userController {
 
 
     @GetMapping(path = "/books")
-    @PreAuthorize("hasAuthority('USER') or hasAuthority('LIBRARIAN') or hasAuthority('ADMIN')")
     public List<Book> getAllBooks(){
         return bookService.getAllBooks();
     }
 
+    //User registration.
     @PostMapping(path = "/register")
     public Object registerUser(@RequestBody User user){
         return userService.registerUser(user);
     }
 
+    //User login.
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String password)
     {

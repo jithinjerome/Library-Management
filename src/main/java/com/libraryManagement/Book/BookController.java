@@ -17,16 +17,19 @@ public class BookController {
 
     private final String adminEmail = "admin@example.com";
 
+    //Display list of all books.
     @GetMapping(path = "/books")
     public List<Book> getAllBooks(){
         return bookService.getAllBooks();
     }
 
+    //Display list of all books having same category.
     @GetMapping(path = "/books/category/{id}")
     public List<Book> bookByCategory(@PathVariable("id") Long categoryId){
         return bookService.getBookByCategory(categoryId);
     }
 
+    //Display list of all books with same author.
     @GetMapping(path = "/books/{author}")
     public ResponseEntity<List<Book>> bookByAuthor(@PathVariable String author){
         return bookService.getBookByAuthor(author);
@@ -42,17 +45,20 @@ public class BookController {
 //        }
     }
 
+    //Display list of all books that comes under same language.
     @GetMapping(path = "/books/language/{id}")
     public List<Book> bookByLanguage(@PathVariable("id") Long languageId){
         return bookService.getBookByLanguage(languageId);
     }
 
+    //Display all books that comes under given language and category.
     @GetMapping(path = "/books/{catId}/{lanId}")
     public List<Book> bookByCategoryAndLanguage(@PathVariable("catId") Long categoryId, @PathVariable("lanId") Long languageId){
         return bookService.getBookByCategoryAndLanguage(categoryId,languageId);
     }
 
 
+    //Adding a book to database.
     @PostMapping(path = "/addBook")
 //    public ResponseEntity<?> newBook(@RequestHeader("email")String email, @RequestBody Book book){
 //        if(!email.equals(adminEmail))
@@ -66,6 +72,7 @@ public class BookController {
         return bookService.addBook(categoryId,languageId,book);
     }
 
+    //Updating a book.
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<?> updateBook(@RequestHeader("email")String email, @PathVariable Long id, @RequestBody Book book)
     {
@@ -76,6 +83,7 @@ public class BookController {
         return ResponseEntity.ok(updatedBook);
     }
 
+    //Category update of a book.
     @PutMapping(path = "/category/{id}")
     public ResponseEntity<?> categoryUpdate(@PathVariable Long id,@RequestParam Long categoryId,@RequestParam Long newCategoryId){
 //        Book updateBook = bookService.categoryUpdate(id,categoryId);
@@ -85,6 +93,7 @@ public class BookController {
 
 
 
+    //Language update of a book.
     @PutMapping(path = "/language/{id}")
     public ResponseEntity<?> languageUpdate(@PathVariable Long id, @RequestParam Long languageId, @RequestParam Long newLanguageId)
     {
@@ -93,6 +102,7 @@ public class BookController {
         return bookService.languageUpdate(id,languageId,newLanguageId);
     }
 
+    //Delete a book by its id.
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteById(@RequestHeader("email") String email, @PathVariable Long id)
     {
